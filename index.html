@@ -954,7 +954,7 @@ function subscribeNewsletter(){
   btn.textContent = 'Sending...';
   btn.disabled = true;
   
-  const url = 'https://script.google.com/macros/s/AKfycbzfQTQUSPI_BvWLPv3oFFetBw8_lVwQqqJbYKln7sM5JEIHNYuGi0nQ_CyAdhH5UZja/exec?email=' + encodeURIComponent(email);
+  const url = 'https://script.google.com/macros/s/AKfycbzn18QTrA18zZhqKaV72sg5YfTNVlzu1zTpPCSWaq6AH1Ou31n7ZCi_-xRFqJGGvcex/exec?email=' + encodeURIComponent(email);
   
   fetch(url, {mode: 'no-cors'}).then(() => {
     document.getElementById('newsletterForm').style.display = 'none';

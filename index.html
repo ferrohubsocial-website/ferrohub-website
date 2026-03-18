@@ -954,11 +954,9 @@ function subscribeNewsletter(){
   btn.textContent = 'Sending...';
   btn.disabled = true;
   
-  fetch('https://script.google.com/macros/s/AKfycbzfQTQUSPI_BvWLPv3oFFetBw8_lVwQqqJbYKln7sM5JEIHNYuGi0nQ_CyAdhH5UZja/exec', {
-    method: 'POST',
-    body: JSON.stringify({email: email}),
-    mode: 'no-cors'
-  }).then(() => {
+  const url = 'https://script.google.com/macros/s/AKfycbzfQTQUSPI_BvWLPv3oFFetBw8_lVwQqqJbYKln7sM5JEIHNYuGi0nQ_CyAdhH5UZja/exec?email=' + encodeURIComponent(email);
+  
+  fetch(url, {mode: 'no-cors'}).then(() => {
     document.getElementById('newsletterForm').style.display = 'none';
     document.getElementById('newsletterSuccess').style.display = 'block';
   }).catch(() => {

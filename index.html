@@ -43,13 +43,10 @@ button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
 .nav:not(.scrolled) .nav-links a:not(.nav-cta):hover{color:#ffffff}
 .nav:not(.scrolled) .nav-menu-btn span{background:#ffffff}
 .nav.scrolled{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(0,0,0,0.06)}
+.nav.scrolled .nav-logo{background:transparent;padding:6px 0}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:80px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center}
-.nav-logo img{height:44px;width:auto}
-.nav-logo .logo-dark{display:none}
-.nav-logo .logo-white{display:block}
-.nav.scrolled .nav-logo .logo-dark{display:block}
-.nav.scrolled .nav-logo .logo-white{display:none}
+.nav-logo{display:flex;align-items:center;background:#ffffff;padding:6px 12px;border-radius:10px}
+.nav-logo img{height:40px;width:auto}
 .nav-links{display:flex;align-items:center;gap:20px}
 .nav-links a{font-size:13px;font-weight:500;letter-spacing:0.5px;color:var(--text-light);transition:color 0.3s}
 .nav-links a:hover{color:var(--blue)}
@@ -302,7 +299,7 @@ a.brand-card{text-decoration:none;color:inherit}
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo"><img src="images/logo-white.png" alt="FerroHub Mall" class="logo-white"><img src="images/logo.png" alt="FerroHub Mall" class="logo-dark"></a>
+    <a href="#" class="nav-logo"><img src="images/logo.png" alt="FerroHub Mall"></a>
     <div class="nav-links">
       <a href="#features">Discover</a>
       <a href="#brands">Stores</a>

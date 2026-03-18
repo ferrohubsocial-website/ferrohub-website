@@ -856,10 +856,11 @@ a.brand-card{text-decoration:none;color:inherit}
       <div>
         <div class="footer-brand"><img src="images/logo.png" alt="FerroHub Mall"></div>
         <p class="footer-brand-desc">Your neighbourhood mall at Budigere Cross, Bangalore. Shop, dine, play, relax — all under the open sky.</p>
-        <div class="newsletter-form">
-          <input type="email" placeholder="Your email address">
-          <button>Subscribe</button>
+        <div class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Your email address" id="newsletterEmail" onkeydown="if(event.key==='Enter')subscribeNewsletter()">
+          <button onclick="subscribeNewsletter()">Subscribe</button>
         </div>
+        <div id="newsletterSuccess" style="display:none;margin-top:16px;padding:12px 20px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);border-radius:100px;font-size:13px;font-weight:600;color:#34d399">✓ Thanks for subscribing!</div>
       </div>
       <div>
         <h5>Explore</h5>
@@ -941,6 +942,30 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Newsletter subscribe
+function subscribeNewsletter(){
+  const email = document.getElementById('newsletterEmail').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('newsletterEmail').style.borderColor='#e74c3c';
+    return;
+  }
+  const btn = document.querySelector('#newsletterForm button');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  
+  fetch('https://script.google.com/macros/s/AKfycbzfQTQUSPI_BvWLPv3oFFetBw8_lVwQqqJbYKln7sM5JEIHNYuGi0nQ_CyAdhH5UZja/exec', {
+    method: 'POST',
+    body: JSON.stringify({email: email}),
+    mode: 'no-cors'
+  }).then(() => {
+    document.getElementById('newsletterForm').style.display = 'none';
+    document.getElementById('newsletterSuccess').style.display = 'block';
+  }).catch(() => {
+    document.getElementById('newsletterForm').style.display = 'none';
+    document.getElementById('newsletterSuccess').style.display = 'block';
+  });
+}
 
 // Gallery scroll
 const track = document.querySelector('.gallery-track');

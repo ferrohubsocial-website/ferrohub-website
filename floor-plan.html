@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floor Plan — FerroHub Mall</title>
+<meta name="description" content="Explore FerroHub Mall's floor plan. Find stores by floor — Ground Floor, Mezzanine, First Floor, Phase 2 & Terrace.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--bg-dark:#2c3033;--cream:#f0f6fb;--sand:#d6e6f0;--blue:#0986c4;--blue-light:#67b0d1;--blue-pale:#e4f1f8;--blue-dark:#076a9c;--dark:#2c3033;--text:#2c3033;--text-light:#5a6068;--white:#fff;--pink:#e91e8c;--font-display:'Playfair Display',serif;--font-body:'Sora',sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--font-body);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}img{max-width:100%;display:block}button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+.nav{background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:40px}
+.nav-links{display:flex;gap:16px;align-items:center}
+.nav-links a{font-size:13px;font-weight:600;color:var(--text-light);transition:color .3s}.nav-links a:hover{color:var(--blue)}
+
+.fp-hero{padding:60px 0 40px;background:var(--bg-dark);color:var(--white)}
+.fp-hero h1{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:600;margin-bottom:12px;letter-spacing:-.5px}
+.fp-hero p{font-size:16px;color:rgba(255,255,255,.5);max-width:560px;line-height:1.7}
+
+.floor-tabs{position:sticky;top:72px;z-index:40;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:16px 0}
+.tabs-inner{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.tab-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;border:2px solid var(--sand);color:var(--text-light);transition:all .3s;white-space:nowrap;flex-shrink:0}
+.tab-btn:hover{border-color:var(--blue);color:var(--blue)}
+.tab-btn.active{background:var(--blue);color:var(--white);border-color:var(--blue)}
+
+.floor-content{padding:40px 0 80px}
+.floor-panel{display:none}
+.floor-panel.active{display:block}
+
+.floor-plan-wrapper{position:relative;background:var(--white);border-radius:20px;border:1px solid rgba(0,0,0,.06);overflow:hidden;margin-bottom:32px}
+.floor-plan-img{width:100%;height:auto;display:block}
+.floor-plan-zoom{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+.zoom-btn{width:40px;height:40px;border-radius:10px;background:var(--white);border:1px solid var(--sand);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .3s;color:var(--text)}
+.zoom-btn:hover{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.zoom-container{overflow:auto;max-height:600px;cursor:grab;border-radius:20px}
+.zoom-container:active{cursor:grabbing}
+.zoom-container img{min-width:100%;transition:transform .3s}
+
+.legend{display:flex;gap:24px;align-items:center;justify-content:center;padding:20px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-light)}
+.legend-color{width:20px;height:20px;border-radius:4px}
+
+.floor-stores{margin-top:32px}
+.floor-stores h3{font-family:var(--font-display);font-size:24px;font-weight:600;margin-bottom:20px}
+.store-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.store-chip{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:12px;background:var(--white);border:1px solid rgba(0,0,0,.05);transition:all .3s}
+.store-chip:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.store-chip-logo{width:36px;height:36px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--cream);flex-shrink:0}
+.store-chip-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+.store-chip-initials{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;flex-shrink:0}
+.store-chip-info{min-width:0}
+.store-chip-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.store-chip-cat{font-size:11px;color:var(--text-light)}
+.chip-occupied{border-left:3px solid var(--pink)}
+.chip-vacant{border-left:3px solid var(--blue);opacity:.6}
+
+.floor-info{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.floor-info-card{padding:16px 20px;border-radius:12px;background:var(--white);border:1px solid rgba(0,0,0,.05);flex:1;min-width:160px}
+.floor-info-num{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--blue)}
+.floor-info-label{font-size:12px;color:var(--text-light);margin-top:2px}
+
+.sf-footer{padding:36px 0;background:var(--bg-dark);color:var(--white);text-align:center}
+.sf-footer p{font-size:13px;color:rgba(255,255,255,.4)}.sf-footer a{color:var(--blue-light);font-weight:600}
+
+@media(max-width:900px){.store-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.store-list{grid-template-columns:1fr}.tab-btn{padding:10px 16px;font-size:13px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="FerroHub Mall"></a>
+  <div class="nav-links">
+    <a href="stores.html">Store Finder</a>
+    <a href="index.html">← Home</a>
+  </div>
+</div></nav>
+
+<section class="fp-hero"><div class="container">
+  <h1>Floor Plan</h1>
+  <p>Explore FerroHub Mall floor by floor. Tap on any level to see the layout and find where your favourite stores are located.</p>
+</div></section>
+
+<div class="floor-tabs"><div class="container"><div class="tabs-inner">
+  <button class="tab-btn active" data-floor="ground">Ground Floor</button>
+  <button class="tab-btn" data-floor="mezzanine">Mezzanine</button>
+  <button class="tab-btn" data-floor="first">First Floor</button>
+  <button class="tab-btn" data-floor="phase2">Phase 2</button>
+  <button class="tab-btn" data-floor="terrace">Terrace</button>
+</div></div></div>
+
+<section class="floor-content"><div class="container">
+
+  <!-- GROUND FLOOR -->
+  <div class="floor-panel active" id="ground">
+    <div class="floor-info">
+      <div class="floor-info-card"><div class="floor-info-num">17</div><div class="floor-info-label">Occupied stores</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">2</div><div class="floor-info-label">Vacant spaces</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">1,423 sqft</div><div class="floor-info-label">Events space</div></div>
+    </div>
+    <div class="floor-plan-zoom">
+      <button class="zoom-btn" onclick="zoom('ground',1)">−</button>
+      <button class="zoom-btn" onclick="zoom('ground',2)">+</button>
+    </div>
+    <div class="floor-plan-wrapper"><div class="zoom-container" id="zc-ground">
+      <img src="images/floor-ground.jpg" alt="Ground Floor Plan" class="floor-plan-img" id="zi-ground">
+    </div></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-color" style="background:#e91e8c"></div>Occupied</div>
+      <div class="legend-item"><div class="legend-color" style="background:#6699ff"></div>Vacant</div>
+    </div>
+    <div class="floor-stores">
+      <h3>Stores on Ground Floor</h3>
+      <div class="store-list">
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/naxo.png" alt="Naxo"></div><div class="store-chip-info"><div class="store-chip-name">Naxo Hypermarket</div><div class="store-chip-cat">Shop 5,6,7 · 9,324 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/smart-baby.png" alt="Smart Baby"></div><div class="store-chip-info"><div class="store-chip-name">Smart Baby</div><div class="store-chip-cat">Shop 8&9 · 5,080 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/starbucks.png" alt="Starbucks"></div><div class="store-chip-info"><div class="store-chip-name">Starbucks</div><div class="store-chip-cat">Shop 12 · 1,257 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/bazme-zauq.png" alt="Bazm-e-Zauq"></div><div class="store-chip-info"><div class="store-chip-name">Bazm-e-Zauq</div><div class="store-chip-cat">Shop 11B · 1,614 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/samosa-party.png" alt="Samosa Party"></div><div class="store-chip-info"><div class="store-chip-name">Samosa Party</div><div class="store-chip-cat">Shop 11A · 737 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/bata.png" alt="Bata"></div><div class="store-chip-info"><div class="store-chip-name">Bata</div><div class="store-chip-cat">Shop 2 · 1,082 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/jockey.png" alt="Jockey"></div><div class="store-chip-info"><div class="store-chip-name">Jockey</div><div class="store-chip-cat">Shop 3 · 1,105 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/go-colours.png" alt="Go Colours"></div><div class="store-chip-info"><div class="store-chip-name">Go Colours</div><div class="store-chip-cat">Shop 1 · 2,399 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/foot-lounge.png" alt="Foot Lounge"></div><div class="store-chip-info"><div class="store-chip-name">Foot Lounge</div><div class="store-chip-cat">Shop 4 · 2,434 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/mobicity.png" alt="Mobicity"></div><div class="store-chip-info"><div class="store-chip-name">Mobicity</div><div class="store-chip-cat">Stall 1 · 445 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-initials" style="background:#333">SW</div><div class="store-chip-info"><div class="store-chip-name">Subway</div><div class="store-chip-cat">Kiosk · 297 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-initials" style="background:#5bb5d5">PB</div><div class="store-chip-info"><div class="store-chip-name">Polar Bear</div><div class="store-chip-cat">Kiosk · 1,081 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/churro-land.png" alt="Churro Land"></div><div class="store-chip-info"><div class="store-chip-name">Churro Land</div><div class="store-chip-cat">Kiosk · 3m×3m</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-initials" style="background:#7cb342">PJ</div><div class="store-chip-info"><div class="store-chip-name">Pressed Juicery</div><div class="store-chip-cat">Kiosk · 3m×3m</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-initials" style="background:#666">AC</div><div class="store-chip-info"><div class="store-chip-name">ACCS 1</div><div class="store-chip-cat">Kiosk · 3m×3m</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">10A</div><div class="store-chip-info"><div class="store-chip-name">Shop 10A — Vacant</div><div class="store-chip-cat">1,709 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">10B</div><div class="store-chip-info"><div class="store-chip-name">Shop 10B — Vacant</div><div class="store-chip-cat">526 sqft · Available</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEZZANINE -->
+  <div class="floor-panel" id="mezzanine">
+    <div class="floor-info">
+      <div class="floor-info-card"><div class="floor-info-num">4</div><div class="floor-info-label">Occupied stores</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">896 sqft</div><div class="floor-info-label">Mall office</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">Viewing Deck</div><div class="floor-info-label">+ Conference Room</div></div>
+    </div>
+    <div class="floor-plan-zoom">
+      <button class="zoom-btn" onclick="zoom('mezzanine',1)">−</button>
+      <button class="zoom-btn" onclick="zoom('mezzanine',2)">+</button>
+    </div>
+    <div class="floor-plan-wrapper"><div class="zoom-container" id="zc-mezzanine">
+      <img src="images/floor-mezzanine.jpg" alt="Mezzanine Floor Plan" class="floor-plan-img" id="zi-mezzanine">
+    </div></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-color" style="background:#e91e8c"></div>Occupied</div>
+      <div class="legend-item"><div class="legend-color" style="background:#6699ff"></div>Vacant</div>
+    </div>
+    <div class="floor-stores">
+      <h3>Stores on Mezzanine Floor</h3>
+      <div class="store-list">
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/smart-baby.png" alt="Smart Baby"></div><div class="store-chip-info"><div class="store-chip-name">Smart Baby</div><div class="store-chip-cat">Shop 8&9 Mezz · 2,586 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/jockey.png" alt="Jockey"></div><div class="store-chip-info"><div class="store-chip-name">Jockey</div><div class="store-chip-cat">Shop 3 Mezz · 392 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/go-colours.png" alt="Go Colours"></div><div class="store-chip-info"><div class="store-chip-name">Go Colours</div><div class="store-chip-cat">Shop 1 Mezz · 985 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/foot-lounge.png" alt="Foot Lounge"></div><div class="store-chip-info"><div class="store-chip-name">Foot Lounge</div><div class="store-chip-cat">Shop 4 Mezz · 1,008 sqft</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRST FLOOR -->
+  <div class="floor-panel" id="first">
+    <div class="floor-info">
+      <div class="floor-info-card"><div class="floor-info-num">3</div><div class="floor-info-label">Occupied stores</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">8</div><div class="floor-info-label">Vacant spaces</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">12</div><div class="floor-info-label">Stall spaces</div></div>
+    </div>
+    <div class="floor-plan-zoom">
+      <button class="zoom-btn" onclick="zoom('first',1)">−</button>
+      <button class="zoom-btn" onclick="zoom('first',2)">+</button>
+    </div>
+    <div class="floor-plan-wrapper"><div class="zoom-container" id="zc-first">
+      <img src="images/floor-first.jpg" alt="First Floor Plan" class="floor-plan-img" id="zi-first">
+    </div></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-color" style="background:#e91e8c"></div>Occupied</div>
+      <div class="legend-item"><div class="legend-color" style="background:#6699ff"></div>Vacant</div>
+    </div>
+    <div class="floor-stores">
+      <h3>Stores on First Floor</h3>
+      <div class="store-list">
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/toni-guy.png" alt="Toni & Guy"></div><div class="store-chip-info"><div class="store-chip-name">Toni & Guy</div><div class="store-chip-cat">Shop 15 · 1,771 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/rxdx.png" alt="RXDX"></div><div class="store-chip-info"><div class="store-chip-name">RXDX Lab</div><div class="store-chip-cat">Shop 15,16 · 2,881 sqft</div></div></div>
+        <div class="store-chip chip-occupied"><div class="store-chip-logo"><img src="images/brands/beijing-bites.png" alt="Beijing Bites"></div><div class="store-chip-info"><div class="store-chip-name">Beijing Bites</div><div class="store-chip-cat">Shop 14 · 1,414 sqft</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">19</div><div class="store-chip-info"><div class="store-chip-name">Shop 19A — Vacant</div><div class="store-chip-cat">871 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">19</div><div class="store-chip-info"><div class="store-chip-name">Shop 19B — Vacant</div><div class="store-chip-cat">885 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">17</div><div class="store-chip-info"><div class="store-chip-name">Shop 17 — Vacant</div><div class="store-chip-cat">1,801 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">20</div><div class="store-chip-info"><div class="store-chip-name">Shop 20 — Vacant</div><div class="store-chip-cat">1,238 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">21</div><div class="store-chip-info"><div class="store-chip-name">Shop 21 — Vacant</div><div class="store-chip-cat">1,754 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">22</div><div class="store-chip-info"><div class="store-chip-name">Shop 22 — Vacant</div><div class="store-chip-cat">1,244 sqft · Available</div></div></div>
+        <div class="store-chip chip-vacant"><div class="store-chip-initials" style="background:#6699ff">23</div><div class="store-chip-info"><div class="store-chip-name">Shop 23 — Vacant</div><div class="store-chip-cat">1,499 sqft · Available</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="floor-panel" id="phase2">
+    <div class="floor-info">
+      <div class="floor-info-card"><div class="floor-info-num">20,237 sqft</div><div class="floor-info-label">Open retail space</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">Phase 2</div><div class="floor-info-label">Coming soon</div></div>
+    </div>
+    <div class="floor-plan-zoom">
+      <button class="zoom-btn" onclick="zoom('phase2',1)">−</button>
+      <button class="zoom-btn" onclick="zoom('phase2',2)">+</button>
+    </div>
+    <div class="floor-plan-wrapper"><div class="zoom-container" id="zc-phase2">
+      <img src="images/floor-phase2.jpg" alt="Phase 2 Ground Floor Plan" class="floor-plan-img" id="zi-phase2">
+    </div></div>
+    <div style="text-align:center;padding:32px;background:var(--blue-pale);border-radius:16px;margin-top:24px">
+      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:8px">Interested in Phase 2 space?</h3>
+      <p style="color:var(--text-light);font-size:14px;margin-bottom:16px">20,237 sqft of prime retail space available for leasing.</p>
+      <a href="mailto:ferrohubteam@gmail.com?subject=Phase%202%20Leasing%20Inquiry" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--blue);color:#fff;border-radius:100px;font-size:14px;font-weight:600">Contact for Leasing →</a>
+    </div>
+  </div>
+
+  <!-- TERRACE -->
+  <div class="floor-panel" id="terrace">
+    <div class="floor-info">
+      <div class="floor-info-card"><div class="floor-info-num">4</div><div class="floor-info-label">Terrace blocks</div></div>
+      <div class="floor-info-card"><div class="floor-info-num">Events</div><div class="floor-info-label">Open-air venue</div></div>
+    </div>
+    <div class="floor-plan-zoom">
+      <button class="zoom-btn" onclick="zoom('terrace',1)">−</button>
+      <button class="zoom-btn" onclick="zoom('terrace',2)">+</button>
+    </div>
+    <div class="floor-plan-wrapper"><div class="zoom-container" id="zc-terrace">
+      <img src="images/floor-terrace.jpg" alt="Terrace Floor Plan" class="floor-plan-img" id="zi-terrace">
+    </div></div>
+    <div class="floor-stores">
+      <h3>Terrace Areas</h3>
+      <div class="store-list">
+        <div class="store-chip"><div class="store-chip-initials" style="background:var(--pink)">N</div><div class="store-chip-info"><div class="store-chip-name">Terrace North Block</div><div class="store-chip-cat">8,777 sqft + 1,662 sqft</div></div></div>
+        <div class="store-chip"><div class="store-chip-initials" style="background:var(--pink)">W</div><div class="store-chip-info"><div class="store-chip-name">Terrace West Block</div><div class="store-chip-cat">7,117 sqft</div></div></div>
+        <div class="store-chip"><div class="store-chip-initials" style="background:var(--pink)">S</div><div class="store-chip-info"><div class="store-chip-name">Terrace South Block</div><div class="store-chip-cat">1,340 + 5,762 sqft</div></div></div>
+        <div class="store-chip"><div class="store-chip-initials" style="background:#f59e0b">EV</div><div class="store-chip-info"><div class="store-chip-name">Events & Open-Air Space</div><div class="store-chip-cat">Live music, flea markets, community events</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div></section>
+
+<footer class="sf-footer"><div class="container">
+  <p>FerroHub Mall · 112, Budigere Cross, Cheemasandra, Bengaluru · Mon – Sun, 10 AM to 10 PM</p>
+  <p style="margin-top:8px"><a href="index.html">← Back to Home</a> · <a href="stores.html">Store Finder</a></p>
+</div></footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab-btn');
+const panels=document.querySelectorAll('.floor-panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(b=>b.classList.remove('active'));
+  panels.forEach(p=>p.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.floor).classList.add('active');
+}));
+
+const zoomLevels={ground:1,mezzanine:1,first:1,phase2:1,terrace:1};
+function zoom(floor,dir){
+  const img=document.getElementById('zi-'+floor);
+  if(dir===2)zoomLevels[floor]=Math.min(zoomLevels[floor]+0.5,3);
+  else zoomLevels[floor]=Math.max(zoomLevels[floor]-0.5,1);
+  img.style.transform=`scale(${zoomLevels[floor]})`;
+  img.style.transformOrigin='center center';
+}
+
+// Touch/mouse drag for zoom containers
+document.querySelectorAll('.zoom-container').forEach(el=>{
+  let isDown=false,startX,startY,scrollL,scrollT;
+  el.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-el.offsetLeft;startY=e.pageY-el.offsetTop;scrollL=el.scrollLeft;scrollT=el.scrollTop;});
+  el.addEventListener('mouseleave',()=>isDown=false);
+  el.addEventListener('mouseup',()=>isDown=false);
+  el.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();el.scrollLeft=scrollL-(e.pageX-el.offsetLeft-startX);el.scrollTop=scrollT-(e.pageY-el.offsetTop-startY);});
+});
+</script>
+</body>
+</html>

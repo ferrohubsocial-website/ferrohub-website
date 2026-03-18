@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — FerroHub Mall</title>
+<meta name="description" content="Get in touch with FerroHub Mall for leasing, advertising, partnerships, events, and general inquiries.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f8fafc;--bg-dark:#2c3033;--cream:#f0f6fb;--sand:#d6e6f0;--blue:#0986c4;--blue-light:#67b0d1;--blue-pale:#e4f1f8;--blue-dark:#076a9c;--dark:#2c3033;--text:#2c3033;--text-light:#5a6068;--white:#fff;--font-display:'Playfair Display',serif;--font-body:'Sora',sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--font-body);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}img{max-width:100%;display:block}button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+.nav{background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);position:sticky;top:0;z-index:50}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:40px}
+.nav-links{display:flex;gap:16px;align-items:center}
+.nav-links a{font-size:13px;font-weight:600;color:var(--text-light);transition:color .3s}.nav-links a:hover{color:var(--blue)}
+
+/* HERO */
+.contact-hero{padding:60px 0 40px;background:var(--bg-dark);color:var(--white)}
+.contact-hero h1{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:600;margin-bottom:12px;letter-spacing:-.5px}
+.contact-hero p{font-size:16px;color:rgba(255,255,255,.5);max-width:560px;line-height:1.7}
+
+/* CONTACT GRID */
+.contact-section{padding:60px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:40px}
+
+/* DEPARTMENTS */
+.dept-list{display:flex;flex-direction:column;gap:0}
+.dept-item{border-bottom:1px solid rgba(0,0,0,.08)}
+.dept-header{display:flex;align-items:center;justify-content:space-between;padding:22px 0;cursor:pointer;transition:color .3s}
+.dept-header:hover{color:var(--blue)}
+.dept-header h3{font-size:16px;font-weight:700}
+.dept-arrow{font-size:18px;transition:transform .3s;color:var(--text-light)}
+.dept-item.open .dept-arrow{transform:rotate(180deg)}
+.dept-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.dept-body-inner{padding:0 0 22px}
+.dept-person{margin-bottom:12px}
+.dept-person-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.dept-person-role{font-size:12px;color:var(--text-light);margin-bottom:6px}
+.dept-email{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--blue);font-weight:600;transition:color .3s}
+.dept-email:hover{color:var(--blue-dark)}
+
+/* INFO CARD */
+.info-card{background:var(--cream);border-radius:20px;padding:36px;border:1px solid rgba(0,0,0,.04)}
+.info-card h2{font-family:var(--font-display);font-size:24px;font-weight:600;margin-bottom:24px}
+.info-item{padding:20px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.info-item:last-child{border-bottom:none}
+.info-item h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.info-item p{font-size:14px;color:var(--text-light);line-height:1.6}
+.info-item a{color:var(--blue);font-weight:600}
+
+/* QUERY FORM */
+.query-section{padding:60px 0;background:var(--bg-dark);color:var(--white)}
+.query-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:40px}
+.query-img{border-radius:20px;overflow:hidden;height:100%;min-height:400px;background:var(--cream)}
+.query-img img{width:100%;height:100%;object-fit:cover}
+.query-form{background:var(--white);border-radius:20px;padding:36px;color:var(--text)}
+.query-form h2{font-family:var(--font-display);font-size:22px;font-weight:600;margin-bottom:24px;color:var(--text)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12px;font-weight:600;color:var(--text-light)}
+.form-input{padding:12px 16px;border-radius:10px;border:1px solid var(--sand);font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;transition:border-color .3s;background:var(--bg)}
+.form-input:focus{border-color:var(--blue)}
+.form-select{padding:12px 16px;border-radius:10px;border:1px solid var(--sand);font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;background:var(--bg);appearance:none;cursor:pointer}
+.form-textarea{padding:12px 16px;border-radius:10px;border:1px solid var(--sand);font-size:14px;font-family:var(--font-body);color:var(--text);outline:none;resize:vertical;min-height:120px;background:var(--bg)}
+.form-textarea:focus,.form-select:focus{border-color:var(--blue)}
+.form-check{display:flex;align-items:flex-start;gap:10px;margin:20px 0;font-size:12px;color:var(--text-light);line-height:1.5}
+.form-check input{margin-top:2px;accent-color:var(--blue)}
+.form-check a{color:var(--blue)}
+.form-submit{padding:14px 32px;background:var(--blue);color:var(--white);border:none;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;font-family:var(--font-body)}
+.form-submit:hover{background:var(--blue-dark);transform:translateY(-1px)}
+
+/* LOCATION */
+.location-section{padding:60px 0}
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px}
+.location-card{padding:28px;border-radius:16px;background:var(--white);border:1px solid rgba(0,0,0,.05)}
+.location-card h3{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.location-card p{font-size:14px;color:var(--text-light);line-height:1.7}
+.location-card a{color:var(--blue);font-weight:600}
+
+.sf-footer{padding:36px 0;background:var(--bg-dark);color:var(--white);text-align:center}
+.sf-footer p{font-size:13px;color:rgba(255,255,255,.4)}.sf-footer a{color:var(--blue-light);font-weight:600}
+
+@media(max-width:900px){
+  .contact-grid,.query-grid,.location-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .query-img{min-height:250px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="FerroHub Mall"></a>
+  <div class="nav-links">
+    <a href="stores.html">Store Finder</a>
+    <a href="floor-plan.html">Floor Plan</a>
+    <a href="index.html">← Home</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<section class="contact-hero"><div class="container">
+  <h1>We'd love to hear from you!</h1>
+  <p>Whether it's about leasing, advertising, partnerships, events, or just a question — we're here to help.</p>
+</div></section>
+
+<!-- DEPARTMENTS -->
+<section class="contact-section"><div class="container">
+  <div class="contact-grid">
+
+    <!-- LEFT: Departments -->
+    <div>
+      <h2 style="font-family:var(--font-display);font-size:22px;font-weight:600;margin-bottom:8px">Business Inquiries</h2>
+      <p style="font-size:14px;color:var(--text-light);margin-bottom:24px">For leasing, advertising, and partnership opportunities</p>
+
+      <div class="dept-list">
+        <div class="dept-item open">
+          <div class="dept-header" onclick="toggleDept(this)">
+            <h3>Leasing</h3>
+            <span class="dept-arrow">▾</span>
+          </div>
+          <div class="dept-body" style="max-height:200px">
+            <div class="dept-body-inner">
+              <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">Interested in setting up your brand at FerroHub Mall? Get in touch with our leasing team.</p>
+              <a href="mailto:Cyberhub@trivenisteel.com?subject=Leasing%20Inquiry" class="dept-email">✉ Cyberhub@trivenisteel.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dept-item">
+          <div class="dept-header" onclick="toggleDept(this)">
+            <h3>Advertising</h3>
+            <span class="dept-arrow">▾</span>
+          </div>
+          <div class="dept-body">
+            <div class="dept-body-inner">
+              <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">Promote your brand with premium signage, digital displays, and in-mall branding at FerroHub.</p>
+              <a href="mailto:Cyberhub@trivenisteel.com?subject=Advertising%20Inquiry" class="dept-email">✉ Cyberhub@trivenisteel.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dept-item">
+          <div class="dept-header" onclick="toggleDept(this)">
+            <h3>Partnerships</h3>
+            <span class="dept-arrow">▾</span>
+          </div>
+          <div class="dept-body">
+            <div class="dept-body-inner">
+              <p style="font-size:13px;color:var(--text-light);margin-bottom:12px">Collaborate on events, sponsorships, and community activations with FerroHub Mall.</p>
+              <a href="mailto:Cyberhub@trivenisteel.com?subject=Partnership%20Inquiry" class="dept-email">✉ Cyberhub@trivenisteel.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Mall Contact -->
+    <div class="info-card">
+      <h2>Mall Contact — Info Desk</h2>
+
+      <div class="info-item">
+        <h3>General Inquiries & Help Desk</h3>
+        <p>For visitor information, store directions, lost & found, and general assistance.</p>
+        <a href="mailto:team@ferrohub.in" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px">✉ team@ferrohub.in</a>
+      </div>
+
+      <div class="info-item">
+        <h3>Events & Activations</h3>
+        <p>Want to host an event, book space for a pop-up, or organize a community activity?</p>
+        <a href="mailto:team@ferrohub.in?subject=Event%20Inquiry" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px">✉ team@ferrohub.in</a>
+      </div>
+
+      <div class="info-item">
+        <h3>Mall Information</h3>
+        <p>Hours, accessibility, parking, and any other questions about visiting FerroHub Mall.</p>
+        <a href="mailto:team@ferrohub.in?subject=Mall%20Information" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px">✉ team@ferrohub.in</a>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- QUERY FORM -->
+<section class="query-section"><div class="container">
+  <div class="query-grid">
+    <div class="query-img">
+      <img src="https://framerusercontent.com/images/If9JJDWFzdHqSSZ53XOLLp8Fizs.png?width=1184&height=864" alt="FerroHub Mall">
+    </div>
+    <div class="query-form">
+      <h2>Business Query</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name (required)</label>
+          <input type="text" class="form-input" id="qName" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Phone Number</label>
+          <input type="tel" class="form-input" id="qPhone">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Email (required)</label>
+        <input type="email" class="form-input" id="qEmail" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Department</label>
+        <select class="form-select" id="qDept">
+          <option value="Leasing">Leasing</option>
+          <option value="Advertising">Advertising</option>
+          <option value="Partnership">Partnership</option>
+          <option value="Events">Events</option>
+          <option value="General">General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Message</label>
+        <textarea class="form-textarea" id="qMsg" placeholder="Tell us about your requirement..."></textarea>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="qConsent">
+        <label for="qConsent">By clicking submit, I agree to be contacted regarding my inquiry and consent to receive updates through SMS/Email.</label>
+      </div>
+      <button class="form-submit" onclick="submitQuery()">Send</button>
+      <div id="formStatus" style="margin-top:12px;font-size:13px;display:none"></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- LOCATION -->
+<section class="location-section"><div class="container">
+  <h2 style="font-family:var(--font-display);font-size:28px;font-weight:600;margin-bottom:8px">Visit Us</h2>
+  <p style="color:var(--text-light);font-size:14px">FerroHub Mall, 112, Budigere Cross, Cheemasandra, Bengaluru, Karnataka 560049</p>
+  <div class="location-grid">
+    <div class="location-card">
+      <h3>📍 Address</h3>
+      <p>112, Budigere Cross, Cheemasandra,<br>Bengaluru, Karnataka 560049</p>
+      <a href="https://www.google.com/maps/search/FerroHub+Mall+112+Budigere+Cross+Cheemasandra+Bengaluru+Karnataka+560049" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:14px">Open in Google Maps →</a>
+    </div>
+    <div class="location-card">
+      <h3>🕐 Hours</h3>
+      <p>Monday – Sunday<br>10:00 AM – 10:00 PM</p>
+      <p style="margin-top:8px;font-size:13px">Extended hours during festivals and events.</p>
+    </div>
+  </div>
+</div></section>
+
+<footer class="sf-footer"><div class="container">
+  <p>FerroHub Mall · 112, Budigere Cross, Cheemasandra, Bengaluru · Mon – Sun, 10 AM to 10 PM</p>
+  <p style="margin-top:8px"><a href="index.html">← Back to Home</a></p>
+</div></footer>
+
+<script>
+function toggleDept(el){
+  const item=el.parentElement;
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.dept-item').forEach(i=>{i.classList.remove('open');i.querySelector('.dept-body').style.maxHeight='0';});
+  if(!wasOpen){item.classList.add('open');const body=item.querySelector('.dept-body');body.style.maxHeight=body.scrollHeight+'px';}
+}
+
+function submitQuery(){
+  const name=document.getElementById('qName').value;
+  const email=document.getElementById('qEmail').value;
+  const phone=document.getElementById('qPhone').value;
+  const dept=document.getElementById('qDept').value;
+  const msg=document.getElementById('qMsg').value;
+  const consent=document.getElementById('qConsent').checked;
+  const status=document.getElementById('formStatus');
+
+  if(!name||!email){
+    status.style.display='block';status.style.color='#e74c3c';status.textContent='Please fill in your name and email.';return;
+  }
+  if(!consent){
+    status.style.display='block';status.style.color='#e74c3c';status.textContent='Please agree to the terms.';return;
+  }
+
+  // Determine email based on department
+  const toEmail=(['Leasing','Advertising','Partnership'].includes(dept))?'Cyberhub@trivenisteel.com':'team@ferrohub.in';
+  const subject=encodeURIComponent(dept+' Inquiry - '+name);
+  const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nPhone: '+(phone||'N/A')+'\nDepartment: '+dept+'\n\nMessage:\n'+msg);
+
+  window.location.href='mailto:'+toEmail+'?subject='+subject+'&body='+body;
+
+  status.style.display='block';status.style.color='var(--blue)';status.textContent='Opening your email client...';
+}
+</script>
+</body>
+</html>
